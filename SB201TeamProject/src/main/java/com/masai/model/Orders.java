@@ -32,6 +32,10 @@ public class Orders {
 	@JsonIgnore
 	@OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
 	private List<Product> products;
+	@JsonIgnore
 	@OneToOne(mappedBy = "order1",cascade = CascadeType.ALL)
 	private OrderBill orderBill;
+	public boolean getActive() {
+		return this.active;
+	}
 }

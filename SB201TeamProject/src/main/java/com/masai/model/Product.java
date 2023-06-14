@@ -37,9 +37,12 @@ public class Product {
 	@JsonIgnore
 	private boolean active=true;
 	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "products",cascade = CascadeType.ALL)
 	private Category category;
 	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Orders order;
+	public boolean getActive() {
+		return this.active;
+	}
 }

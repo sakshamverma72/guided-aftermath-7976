@@ -1,5 +1,7 @@
 package com.masai.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +25,12 @@ public class OrderBill {
 	private int totalProductCount;
 	@Min(1)
 	private double totalPrice;
-	
+	@JsonIgnore
+	private boolean active = true;
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	private Orders order1;
+	public boolean getActive() {
+		return this.active;
+	}
 }

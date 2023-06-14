@@ -38,5 +38,10 @@ public class Customer {
 	@JsonIgnore
 	@OneToOne(mappedBy = "customer",cascade = CascadeType.ALL)
 	private Cart cart;
+
+
+	public boolean getActive() {
+		return this.active;
+	}
 	
 }
