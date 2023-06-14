@@ -42,4 +42,7 @@ public class Product {
 	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Orders order;
+	public boolean getActive() {
+		return this.active;
+	}
 }

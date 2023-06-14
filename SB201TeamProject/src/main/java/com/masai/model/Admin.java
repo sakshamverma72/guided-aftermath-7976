@@ -31,4 +31,8 @@ public class Admin {
 	private boolean active=true;
 	@JsonIgnore
 	private final String role = "ROLE_ADMIN";
+
+	public boolean getActive() {
+		return this.active;
+	}
 }
