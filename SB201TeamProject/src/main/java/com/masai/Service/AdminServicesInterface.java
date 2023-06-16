@@ -5,6 +5,8 @@ import java.util.List;
 import com.masai.exception.ApplicationException;
 import com.masai.model.Admin;
 import com.masai.model.Category;
+import com.masai.model.Customer;
+import com.masai.model.Orders;
 import com.masai.model.Product;
 
 
@@ -33,6 +35,14 @@ public interface AdminServicesInterface {
 	List<Product> getAllProduct() throws ApplicationException;
 
 	List<Category> getAllCategory() throws ApplicationException;
+
+	List<Orders> getAllOrders() throws ApplicationException;
+
+	List<Orders> getAllOrdersOfCustomer(Integer customerId) throws ApplicationException;
+
+	void deleteOrder(Integer orderId) throws ApplicationException;
+
+	List<Customer> getAllCustomers() throws ApplicationException;
 
 //	Admin getCustomerDetailsByEmail(String email) throws ApplicationException;
 

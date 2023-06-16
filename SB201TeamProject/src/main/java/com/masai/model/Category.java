@@ -28,7 +28,7 @@ public class Category {
 	@JsonIgnore
 	private boolean active=true;
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
 	private List<Product> products;
 
 	public boolean getActive() {
