@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="SignUp.Css">
+    <title>Document</title>
+</head>
+<body>
+    
+    
+    <form id="form" onsubmit="check()">
+        <h2>Sign-Up in this Sweet World!</h2>
+        <div class="form-control">
+        <label for="fname">First name :-</label>
+        <input type="text" id="fname" placeholder="Name" required>
+        <div class="error"></div>
+    </div>
+        <br>
+        <div class="form-control">
+            <label for="lname">Last name :-</label>
+        <input type="text" id="lname" placeholder="Title" required>
+        <div class="error"></div>
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="pass">Password :-</label>
+        <input type="password" id="pass" placeholder="Password" name="pass" maxlength="10" required>
+        <div class="error"></div>
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="cpass">Confirm Password :-</label>
+        <input type="password" id="cpass" placeholder="Confirm-Password" name="pass" maxlength="10" required>
+        <div class="error"></div>  
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="email">Email :-</label>
+        <input type="email" id="email" name="email" placeholder="abc@mail.com" required>
+        <div class="error"></div>
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="bdate">D.O.B :-</label>
+        <input type="date" id="bdate" name="bdate" placeholder="Date of birth" required>
+        <div class="error"></div>
+    </div>
+    <br>
+    <div class="form-control">
+        <label for="phone">Contact no :-</label>
+        <input type="tel" id="phone" name="phone" minlength="10" maxlength="12" placeholder="+(91)-1234567890" required>
+        <div class="error"></div>
+    </div>
+    <br>
+
+    <button type="submit">Submit</button>
+    <button type="reset">Reset</button>
+    </form>
+
+</body>
+<script src="SignUp.Js"></script>
+</html>
