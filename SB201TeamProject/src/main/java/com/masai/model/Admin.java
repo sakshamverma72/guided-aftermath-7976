@@ -24,7 +24,7 @@ public class Admin {
 	private String name;
 	@NotNull(message = "Email of admin can't be Null")
 	@Email(message = "Email should be in proper Format")
-	private String mailOrUsername;
+	private String email;
 	@NotNull(message = "Password of admin can't be Null")
 	private String password;
 	@JsonIgnore

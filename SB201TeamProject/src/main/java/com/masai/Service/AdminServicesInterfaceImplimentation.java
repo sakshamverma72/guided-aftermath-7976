@@ -9,10 +9,12 @@ import com.masai.exception.ApplicationException;
 import com.masai.model.Admin;
 import com.masai.model.Category;
 import com.masai.model.Customer;
+import com.masai.model.Orders;
 import com.masai.model.Product;
 import com.masai.repository.AdminRepository;
 import com.masai.repository.CategoryRepository;
 import com.masai.repository.CustomerRepository;
+import com.masai.repository.OrdersRepository;
 import com.masai.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +29,8 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 	private CategoryRepository cRepo;
 	@Autowired
 	private CustomerRepository cuRepo;
+	@Autowired
+	private OrdersRepository oRepo;
 //	@Autowired
 //	private PasswordEncoder pass;
 	
@@ -57,7 +61,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		}
 		if(admin==null) throw new ApplicationException("Fields don't have any data");
 		opt.get().setName(admin.getName());
-		opt.get().setMailOrUsername(admin.getMailOrUsername());
+		opt.get().setEmail(admin.getEmail());
 //		opt.get().setPassword(pass.enCode(admin.getPassword()));
 		opt.get().setPassword(admin.getPassword());
 		aRepo.save(opt.get());
@@ -78,7 +82,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		log.info("Admin is Deleting a Customer in Service Layer");
 		Optional<Customer> opt = cuRepo.findById(customerId);
 		if(opt.isEmpty()) {
-			throw new ApplicationException("No Admin Found with these Details...");
+			throw new ApplicationException("No Customer Found with these Details...");
 		}
 		opt.get().setActive(false);
 		cuRepo.save(opt.get());
@@ -198,14 +202,55 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 	public List<Category> getAllCategory()throws ApplicationException{
 		List<Category>categories = cRepo.findAll();
 		if(categories.size()==0) {
-			throw new ApplicationException("No Admin Found");
+			throw new ApplicationException("No Category Found");
 		}
 		return categories;
+	}
+	@Override
+	public List<Orders> getAllOrders() throws ApplicationException{
+		
+		List<Orders>orders = oRepo.findAll();
+		if(orders.size()==0) {
+			throw new ApplicationException("No Order Found");
+		}
+		return orders;
+	}
+	@Override
+	public List<Orders> getAllOrdersOfCustomer(Integer customerId) throws ApplicationException{
+		// TODO Auto-generated method stub
+		Optional<Customer> opt = cuRepo.findById(customerId);
+		if(opt.isEmpty()) {
+			throw new ApplicationException("No Customer Found with these Details...");
+		}
+		if(opt.get().getCart()==null) {
+			throw new ApplicationException("Cart of customer don't have any Order...");
+		}
+		List<Orders>orders = opt.get().getCart().getOrders();
+		if(orders.size()==0) {
+			throw new ApplicationException("No Order Found");
+		}
+		return orders;
+	}
+	@Override
+	public void deleteOrder(Integer orderId)throws ApplicationException{
+		Optional<Orders>opt = oRepo.findById(orderId);
+		if(opt.isEmpty()) {
+			throw new ApplicationException("No Order Found with this Id...");
+		}
+		opt.get().setActive(false);
+		oRepo.save(opt.get());
 	}
 //	@Override
 //	public Admin getDetails(String email)throws ApplicationException {
 //		
 //		return aRepo.findByEmail(email).orElseThrow(() -> new ApplicationException("Customer Not found with Email: "+email));
 //	}
-
+	@Override
+	public List<Customer> getAllCustomers()throws ApplicationException {
+		List<Customer>customers = cuRepo.findAll();
+		if(customers.size()==0) {
+			throw new ApplicationException("No Customer Found");
+		}
+		return customers;
+	}
 }
