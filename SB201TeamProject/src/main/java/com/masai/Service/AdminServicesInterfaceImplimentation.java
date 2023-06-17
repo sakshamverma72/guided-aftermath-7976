@@ -1,5 +1,6 @@
 package com.masai.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +39,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 	public void addAdmin(Admin admin) throws ApplicationException {
 		log.info("Admin is Adding customer in Service Layer");
 		Optional<Admin> opt = aRepo.findById(admin.getAdminId());
-		if(opt.isPresent()) {
+		if(opt.isPresent() && opt.get().getActive()) {
 			throw new ApplicationException("Already Exists with these credentials...");
 		}
 		if(admin.getAdminId()!=0) {
@@ -53,7 +54,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 	public void updateAdmin(Integer adminId,Admin admin) throws ApplicationException{
 		log.info("Admin is Updating an Admin Details in Service Layer");
 		Optional<Admin> opt = aRepo.findById(adminId);
-		if(opt.isEmpty()) {
+		if(opt.isEmpty() || !opt.get().getActive()) {
 			throw new ApplicationException("No Admin Found with this ID...");
 		}
 		if(admin.getAdminId()!=0) {
@@ -71,7 +72,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 	public void deleteAdmin(Integer adminId)throws ApplicationException {
 		log.info("Admin is Deleting an Admin in Service Layer");
 		Optional<Admin> opt = aRepo.findById(adminId);
-		if(opt.isEmpty()) {
+		if(opt.isEmpty()  ||  !opt.get().getActive()) {
 			throw new ApplicationException("No Admin Found with these Details...");
 		}
 		opt.get().setActive(false);
@@ -81,7 +82,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 	public void deleteCustomer(Integer customerId) throws ApplicationException {
 		log.info("Admin is Deleting a Customer in Service Layer");
 		Optional<Customer> opt = cuRepo.findById(customerId);
-		if(opt.isEmpty()) {
+		if(opt.isEmpty() || !opt.get().getActive()) {
 			throw new ApplicationException("No Customer Found with these Details...");
 		}
 		opt.get().setActive(false);
@@ -95,7 +96,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 	public void addProduct(int cateId,Product product) throws ApplicationException {
 		log.info("Admin is Adding Product in Service Layer");
 		Optional<Product> opt = pRepo.findById(product.getProductId());
-		if(opt.isPresent()) {
+		if(opt.isPresent() && opt.get().getActive()) {
 			throw new ApplicationException("Already Exists with these Details...");
 		}
 		if(product.getProductId()!=0) {
@@ -103,7 +104,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		}
 		if(product==null) throw new ApplicationException("Fields don't have any data");
 		Optional<Category> optt = cRepo.findById(cateId);
-		if(optt.isEmpty()) {
+		if(optt.isEmpty() || !optt.get().getActive()) {
 			throw new ApplicationException("No Category Found with this ID...");
 		}
 		optt.get().getProducts().add(product);
@@ -114,7 +115,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 	public void updateProduct(Integer productId, Product product) throws ApplicationException {
 		log.info("Admin is Updating Product in Service Layer");
 		Optional<Product> opt = pRepo.findById(product.getProductId());
-		if(opt.isEmpty()){
+		if(opt.isEmpty() || !opt.get().getActive()){
 			throw new ApplicationException("No Product Found with this ID...");
 		}
 		if(product.getProductId()!=0) {
@@ -133,7 +134,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 	public void deleteProduct(Integer productId) throws ApplicationException{
 		log.info("Admin is Deleting Product in Service Layer");
 		Optional<Product> opt = pRepo.findById(productId);
-		if(opt.isEmpty()){
+		if(opt.isEmpty() || !opt.get().getActive()){
 			throw new ApplicationException("No Product Found with this ID...");
 		}
 		opt.get().setActive(false);
@@ -146,7 +147,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 	public void addCategory(Category category) throws ApplicationException{
 		log.info("Admin is Adding Category in Service Layer");
 		Optional<Category> opt = cRepo.findById(category.getCategoryId());
-		if(opt.isPresent()) {
+		if(opt.isPresent() && opt.get().getActive()) {
 			throw new ApplicationException("Already Exists with these Details...");
 		}
 		if(category.getCategoryId()!=0) {
@@ -158,7 +159,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 	public void deleteCategory(Integer categoryId) throws ApplicationException{
 		log.info("Admin is Deleting a category in Service Layer");
 		Optional<Category> opt = cRepo.findById(categoryId);
-		if(opt.isEmpty()) {
+		if(opt.isEmpty() || !opt.get().getActive()) {
 			throw new ApplicationException("No Category Found with this ID...");
 		}
 		opt.get().setActive(false);
@@ -172,7 +173,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 	public void updateCategory(Integer categoryId, Category category)throws ApplicationException{
 		log.info("Admin is Updating a category in Service Layer");
 		Optional<Category> opt = cRepo.findById(categoryId);
-		if(opt.isEmpty()) {
+		if(opt.isEmpty() || !opt.get().getActive()) {
 			throw new ApplicationException("No Category Found with this ID...");
 		}
 		if(category.getCategoryId()!=0) {
@@ -188,15 +189,33 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		if(admins.size()==0) {
 			throw new ApplicationException("No Admin Found");
 		}
-		return admins;
+		ArrayList<Admin>ans = new ArrayList<>();
+		for(Admin ad:admins) {
+			if(ad.getActive()) {
+				ans.add(ad);
+			}
+		}
+		if(ans.size()==0) {
+			throw new ApplicationException("No Admin Found");
+		}
+		return ans;
 	}
 	@Override
 	public List<Product> getAllProduct()throws ApplicationException{
 		List<Product>products = pRepo.findAll();
 		if(products.size()==0) {
-			throw new ApplicationException("No Admin Found");
+			throw new ApplicationException("No Product Found");
 		}
-		return products;
+		ArrayList<Product>ans = new ArrayList<>();
+		for(Product ad:products) {
+			if(ad.getActive()) {
+				ans.add(ad);
+			}
+		}
+		if(ans.size()==0) {
+			throw new ApplicationException("No Product Found");
+		}
+		return ans;
 	}
 	@Override
 	public List<Category> getAllCategory()throws ApplicationException{
@@ -204,22 +223,40 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		if(categories.size()==0) {
 			throw new ApplicationException("No Category Found");
 		}
-		return categories;
+		ArrayList<Category>ans = new ArrayList<>();
+		for(Category ad:categories) {
+			if(ad.getActive()) {
+				ans.add(ad);
+			}
+		}
+		if(ans.size()==0) {
+			throw new ApplicationException("No Category Found");
+		}
+		return ans;
 	}
 	@Override
-	public List<Orders> getAllOrders() throws ApplicationException{
+	public List<Product> getAllOrders() throws ApplicationException{
 		
 		List<Orders>orders = oRepo.findAll();
 		if(orders.size()==0) {
 			throw new ApplicationException("No Order Found");
 		}
-		return orders;
+		ArrayList<Product>ans = new ArrayList<>();
+		for(Orders ad:orders) {
+			for(Product pro: ad.getProducts()) {
+				ans.add(pro);
+			}
+		}
+		if(ans.size()==0) {
+			throw new ApplicationException("No ordered Product Found");
+		}
+		return ans;
 	}
 	@Override
-	public List<Orders> getAllOrdersOfCustomer(Integer customerId) throws ApplicationException{
+	public List<Product> getAllOrdersOfCustomer(Integer customerId) throws ApplicationException{
 		// TODO Auto-generated method stub
 		Optional<Customer> opt = cuRepo.findById(customerId);
-		if(opt.isEmpty()) {
+		if(opt.isEmpty() || !opt.get().getActive()) {
 			throw new ApplicationException("No Customer Found with these Details...");
 		}
 		if(opt.get().getCart()==null) {
@@ -229,12 +266,21 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		if(orders.size()==0) {
 			throw new ApplicationException("No Order Found");
 		}
-		return orders;
+		ArrayList<Product>ans = new ArrayList<>();
+		for(Orders ad:orders) {
+			for(Product pro: ad.getProducts()) {
+				ans.add(pro);
+			}
+		}
+		if(ans.size()==0) {
+			throw new ApplicationException("No Product Found in customer's Orders");
+		}
+		return ans;
 	}
 	@Override
 	public void deleteOrder(Integer orderId)throws ApplicationException{
 		Optional<Orders>opt = oRepo.findById(orderId);
-		if(opt.isEmpty()) {
+		if(opt.isEmpty() || !opt.get().getActive()) {
 			throw new ApplicationException("No Order Found with this Id...");
 		}
 		opt.get().setActive(false);

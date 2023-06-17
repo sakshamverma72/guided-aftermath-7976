@@ -4,6 +4,7 @@ package com.masai.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,7 +28,8 @@ public class Customer {
 	private String name;
 	@NotNull(message = "Email of customer can't be Null")
 	@Email(message = "Email should be in proper Format")
-	private String mailOrUsername;
+	@Column(unique = true)
+	private String email;
 	@NotNull(message = "Password of customer can't be Null")
 	private String password;
 	@JsonIgnore

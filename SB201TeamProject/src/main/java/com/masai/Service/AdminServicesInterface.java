@@ -6,7 +6,6 @@ import com.masai.exception.ApplicationException;
 import com.masai.model.Admin;
 import com.masai.model.Category;
 import com.masai.model.Customer;
-import com.masai.model.Orders;
 import com.masai.model.Product;
 
 
@@ -36,9 +35,9 @@ public interface AdminServicesInterface {
 
 	List<Category> getAllCategory() throws ApplicationException;
 
-	List<Orders> getAllOrders() throws ApplicationException;
+	List<Product> getAllOrders() throws ApplicationException;
 
-	List<Orders> getAllOrdersOfCustomer(Integer customerId) throws ApplicationException;
+	List<Product> getAllOrdersOfCustomer(Integer customerId) throws ApplicationException;
 
 	void deleteOrder(Integer orderId) throws ApplicationException;
 
