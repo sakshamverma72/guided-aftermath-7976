@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,6 @@ import com.masai.exception.ApplicationException;
 import com.masai.model.Admin;
 import com.masai.model.Category;
 import com.masai.model.Customer;
-import com.masai.model.Orders;
 import com.masai.model.Product;
 
 import jakarta.validation.Valid;
@@ -26,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
+@CrossOrigin(origins = "*")
 public class AdminController {
 	@Autowired
 	private AdminServicesInterfaceImplimentation adminServices;
@@ -58,16 +59,16 @@ public class AdminController {
 		return new ResponseEntity<List<Product>>(products,HttpStatus.OK);
 	}
 	@GetMapping("/admin/orders")
-	public ResponseEntity<List<Orders>> getAllOrders() throws ApplicationException{
+	public ResponseEntity<List<Product>> getAllOrders() throws ApplicationException{
 		log.info("Admin is fetching orders");
-		List<Orders>orders=adminServices.getAllOrders();
-		return new ResponseEntity<List<Orders>>(orders,HttpStatus.OK);
+		List<Product>orders=adminServices.getAllOrders();
+		return new ResponseEntity<List<Product>>(orders,HttpStatus.OK);
 	}
 	@GetMapping("/admin/customer/{customerId}/orders")
-	public ResponseEntity<List<Orders>> getAllOrdersOfCustomer(@PathVariable("customerId") Integer customerId ) throws ApplicationException{
+	public ResponseEntity<List<Product>> getAllOrdersOfCustomer(@PathVariable("customerId") Integer customerId ) throws ApplicationException{
 		log.info("Admin is fetching orders of a customer");
-		List<Orders>orders=adminServices.getAllOrdersOfCustomer(customerId);
-		return new ResponseEntity<List<Orders>>(orders,HttpStatus.OK);
+		List<Product>orders=adminServices.getAllOrdersOfCustomer(customerId);
+		return new ResponseEntity<List<Product>>(orders,HttpStatus.OK);
 	}
 	
 	
