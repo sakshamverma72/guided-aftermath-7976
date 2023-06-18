@@ -331,7 +331,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		if(customer.isEmpty() || !customer.get().getActive()) {
 			throw new ApplicationException("No Customer Found");
 		}
-		if(!role.toUpperCase().equals("ADMIN") && !role.toUpperCase().equals("USER")) {
+		if(!role.toUpperCase().equals("ADMIN") && !role.toUpperCase().equals("CUSTOMER")) {
 			throw new ApplicationException("Role isn't a Valid one");
 		}
 		customer.get().setRole("ROLE_"+role.toUpperCase());
