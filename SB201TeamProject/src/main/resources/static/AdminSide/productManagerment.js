@@ -247,10 +247,10 @@ if(id==checkProductId){
 }
 
 function createForm(obj){
-  // console.log(obj.description)
+  console.log(obj.description)
   productContent.innerHTML=
   ` <div class="container">
-  <h2 style="margin-left:12vw">Update Product : ( Id : ${obj.productId} )</h2>
+  <h2 style="margin-left:12vw">Update Product : ( Id : ${obj.id} )</h2>
   <form id="productForm">
     <div class="form-group">
       <label for="name">Name:</label>
@@ -258,7 +258,7 @@ function createForm(obj){
     </div>
     <div class="form-group">
       <label for="image">Image URL:</label>
-      <input type="text" id="image" name="image" required value=${obj.imageUrl}>
+      <input type="text" id="image" name="image" required value=${obj.image}>
     </div>
     <div class="form-group">
       <label for="price">Price:</label>
@@ -270,7 +270,7 @@ function createForm(obj){
     </div>
     <div class="form-group">
       <label for="available">Available:</label>
-      <select id="available" name="available" required value=${obj.availablility}>
+      <select id="available" name="available" required value=${obj.available}>
         <option value="true">Yes</option>
         <option value="false">No</option>
       </select>
@@ -295,21 +295,19 @@ updateProductBtn.addEventListener("submit",(e)=>{
     const category = document.getElementById('category').value;
     var productData = {
       name: name,
-      imageUrl: image,
+      image: image,
       price: price,
       description: description,
-      availablility: available,
-      // category: category
+      available: available,
+      category: category
   };
-  let updateApi=apiUrl+'/update/product';
-     let postProductval= fetch(`${updateApi}/${obj.productId}`,{
+     let postProductval= fetch(`${apiUrl}/${obj.id}`,{
           method:"PUT",
           headers:{
               'Content-Type':'application/json'
           },
           body:JSON.stringify(productData)
       })
-      console.log(productData);
           alert("Product Updated") 
   }catch(err){
       console.log("Some issue");
@@ -335,8 +333,7 @@ function handleDeleteProduct() {
   document.getElementById("deleteForm").addEventListener("submit",(e)=>{ 
     e.preventDefault();
     var deleteId=document.getElementById("productId").value;
-    let viewAllProd=apiUrl+'/delete/product';
-  fetch(`${viewAllProd}/${deleteId}`, {
+  fetch(`${apiUrl}/${deleteId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'

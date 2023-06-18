@@ -1,6 +1,6 @@
 package com.masai.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,12 +23,14 @@ public class OrderBill {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int orderBillId;
 	@Min(1)
+	@NotNull(message = "Count Can't be Null")
 	private int totalProductCount;
 	@Min(1)
+	@NotNull(message = "Price Can't be Null")
 	private double totalPrice;
-	@JsonIgnore
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private boolean active = true;
-	@JsonIgnore
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@OneToOne(cascade = CascadeType.ALL)
 	private Orders order1;
 	public boolean getActive() {

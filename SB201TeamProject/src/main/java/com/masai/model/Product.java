@@ -2,6 +2,7 @@ package com.masai.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -9,7 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -29,14 +29,15 @@ public class Product {
 	@NotNull(message = "Image of product can't be Null")
 	private String imageUrl;
 	@Min(1)
+	@NotNull()
 	private Double price;
 	@NotNull(message = "Description of product can't be Null")
 	private String description;
 	@NotNull(message = "Avalaible or not, fill the field")
 	private Boolean availablility;
-	@JsonIgnore
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private boolean active=true;
-	@JsonIgnore
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Category category;
 	@JsonIgnore
