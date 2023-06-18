@@ -164,7 +164,7 @@ public class AdminController {
 	
 //	:::CUSTOMER:::
 	@PatchMapping("/admin/updaterole/customer/{customerId}")
-	public ResponseEntity<Customer> ChangeRoleCustomer(@PathVariable("customerId") Integer customerId , @RequestParam String role) throws ApplicationException{
+	public ResponseEntity<Customer> ChangeRoleCustomer(@PathVariable("customerId") Integer customerId , @RequestBody String role) throws ApplicationException{
 		log.info("Admin is Changing role of a Customer");
 		Customer customer = adminServices.ChangeRoleCustomer(customerId,role);
 		return new ResponseEntity<Customer>(customer,HttpStatus.OK);
