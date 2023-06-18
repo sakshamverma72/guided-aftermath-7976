@@ -107,18 +107,18 @@ public class AdminController {
 	
 	
 	
-//	:::PRODUTC:::
+//	:::PRODUCT:::
 	
 	@PostMapping("/admin/add/category/{categoryId}/products")
-	public ResponseEntity<String> addProduct(@PathVariable("categoryId") Integer cateId,@RequestBody @Valid Product product) throws ApplicationException{
+	public ResponseEntity<Product> addProduct(@PathVariable("categoryId") Integer cateId,@RequestBody @Valid Product product) throws ApplicationException{
 		log.info("Admin is adding another Product");
-		adminServices.addProduct(cateId,product);
-		return new ResponseEntity<String>("Added Succefully...",HttpStatus.ACCEPTED);
+		Product prod=adminServices.addProduct(cateId,product);
+		return new ResponseEntity<>(prod,HttpStatus.OK);
 	}
 	@PutMapping("/admin/update/product/{productId}")
 	public ResponseEntity<String> updateProduct(@PathVariable("productId") Integer productId,@RequestBody @Valid Product product) throws ApplicationException{
 		log.info("Admin is Updating a Product");
-		adminServices.updateProduct(productId,product);
+		adminServices.updateProduct(productId,product);   
 		return new ResponseEntity<String>("updated Succefully...",HttpStatus.OK);
 	}
 	@DeleteMapping("/admin/delete/product/{productId}")

@@ -13,7 +13,7 @@ public interface AdminServicesInterface {
 
 	void addAdmin(Admin admin) throws ApplicationException;
 
-	void addProduct(int cateId,Product product) throws ApplicationException;
+	Product addProduct(int cateId,Product product) throws ApplicationException;
 
 	void addCategory(Category category) throws ApplicationException;
 

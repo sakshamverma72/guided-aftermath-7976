@@ -1,6 +1,6 @@
 const productBtn = document.getElementById('productBtn');
 productBtn.addEventListener('click', handleProductManagement);
-const apiUrl = 'https://648c85bd8620b8bae7ed09b3.mockapi.io/products'; //replace api
+const apiUrl = 'http://localhost:8080/admin'; //replace api
 function handleProductManagement() {
     console.log('Product Management button clicked');
     content.innerHTML="";
@@ -63,56 +63,63 @@ function handleAddProduct() {
       </div>
       <div class="form-group">
         <label for="category">Category:</label>
-        <input type="text" id="category" name="category" required>
+        <input type="number" id="category" name="category" required>
       </div>
       <button type="submit">Submit</button>
     </form>
   </div>`;
-
   function postData(url, data) {
     return fetch(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     })
-    .then(response => response.json())
-    .then(result => {
-     
-        console.log('API response:', result);
+    .then(response =>  {
+      if (response.ok) {
+      
+        console.log('Product Added');
         alert("Product Added");
-       
+      } else {
+        
+        alert('Product Not Added');
+      }
+      return response.json(); 
+    })
+    .then(result => {
+      //  console.log(result.msg)
+         console.log('API response:', result);
+      
     })
     .catch(error => {
-       
-        console.error('Error:', error);
+      console.error('Error:', error);
     });
 }
 
 const productForm = document.getElementById('productForm');
 productForm.addEventListener('submit', function (event) {
-    event.preventDefault(); 
-
-    const name = document.getElementById('name').value;
-    const image = document.getElementById('image').value;
-    const price = document.getElementById('price').value;
-    const description = document.getElementById('description').value;
-    const available = document.getElementById('available').value === 'true';
-    const category = document.getElementById('category').value;
+  event.preventDefault(); 
+  
+  const name = document.getElementById('name').value;
+  const image = document.getElementById('image').value;
+  const price = document.getElementById('price').value;
+  const description = document.getElementById('description').value;
+  const available = document.getElementById('available').value === 'true';
+  const category = document.getElementById('category').value;
+  let addProductApi=apiUrl+`/add/category/${category}/products`;
 
     const productData = {
         name: name,
-        image: image,
+        imageUrl: image,
         price: price,
         description: description,
-        available: available,
-        category: category
+        availablility: available,
     };
 console.log(productData);
    
 
-    postData(apiUrl, productData);
+    postData(addProductApi, productData);
 });
 
 
@@ -132,13 +139,14 @@ function handleViewProducts() {
        <th>Price</th>
        <th>Description</th>
        <th>Available</th>
-       <th>Category</th>
-     </tr>
-   </table>
- </div>`;
- fetchProducts();
+       </tr>
+       </table>
+       </div>`;
+       fetchProducts();
+      //  <th>Category</th>
  function fetchProducts() {
-    fetch(apiUrl)
+  let viewAllProd=apiUrl+'/products';
+    fetch(viewAllProd)
       .then(function(response) {
         return response.json();
       })
@@ -152,13 +160,13 @@ function handleViewProducts() {
 
            var row = table.insertRow();
            var prodId=row.insertCell();
-           prodId.innerText=product.id;
+           prodId.innerText=product.productId;
           var nameCell = row.insertCell();
           nameCell.innerText = product.name;
 
           var imageCell = row.insertCell();
           
-          imageCell.innerHTML = '<img src="' + product.image + '" alt="' + product.name + '">';
+          imageCell.innerHTML = '<img src="' + product.imageUrl + '" alt="' + product.name + '">';
     
 
           var priceCell = row.insertCell();
@@ -168,10 +176,11 @@ function handleViewProducts() {
           descriptionCell.innerText = product.description;
 
           var availableCell = row.insertCell();
-          availableCell.innerText = product.available ? 'Yes' : 'No';
+          availableCell.innerText = product.availablility ? 'Yes' : 'No';
 
-          var categoryCell = row.insertCell();
-          categoryCell.innerText = product.category;
+          // var categoryCell = row.insertCell();
+          // categoryCell.innerText = product.category;
+          // console.log(product.category);
 
           
         }
@@ -197,7 +206,8 @@ function handleEditProduct() {
 var checkProductAvailability=document.getElementById("checkProductAvailability");
 checkProductAvailability.addEventListener('submit',(e)=>{
   e.preventDefault();
-  fetch(apiUrl)
+  let viewAllProd=apiUrl+'/products';
+  fetch(viewAllProd)
   .then(function(response) {
     return response.json();
   })
@@ -222,7 +232,7 @@ console.log(data)
     
     var checkProductId=document.getElementById("idInput").value;
         for (var i = 0; i < data.length; i++) {
-          var id=parseInt(data[i].id);
+          var id=parseInt(data[i].productId);
 
 
 
@@ -237,10 +247,10 @@ if(id==checkProductId){
 }
 
 function createForm(obj){
-  console.log(obj.description)
+  // console.log(obj.description)
   productContent.innerHTML=
   ` <div class="container">
-  <h2 style="margin-left:12vw">Update Product : ( Id : ${obj.id} )</h2>
+  <h2 style="margin-left:12vw">Update Product : ( Id : ${obj.productId} )</h2>
   <form id="productForm">
     <div class="form-group">
       <label for="name">Name:</label>
@@ -248,7 +258,7 @@ function createForm(obj){
     </div>
     <div class="form-group">
       <label for="image">Image URL:</label>
-      <input type="text" id="image" name="image" required value=${obj.image}>
+      <input type="text" id="image" name="image" required value=${obj.imageUrl}>
     </div>
     <div class="form-group">
       <label for="price">Price:</label>
@@ -260,7 +270,7 @@ function createForm(obj){
     </div>
     <div class="form-group">
       <label for="available">Available:</label>
-      <select id="available" name="available" required value=${obj.available}>
+      <select id="available" name="available" required value=${obj.availablility}>
         <option value="true">Yes</option>
         <option value="false">No</option>
       </select>
@@ -285,19 +295,21 @@ updateProductBtn.addEventListener("submit",(e)=>{
     const category = document.getElementById('category').value;
     var productData = {
       name: name,
-      image: image,
+      imageUrl: image,
       price: price,
       description: description,
-      available: available,
-      category: category
+      availablility: available,
+      // category: category
   };
-     let postProductval= fetch(`${apiUrl}/${obj.id}`,{
+  let updateApi=apiUrl+'/update/product';
+     let postProductval= fetch(`${updateApi}/${obj.productId}`,{
           method:"PUT",
           headers:{
               'Content-Type':'application/json'
           },
           body:JSON.stringify(productData)
       })
+      console.log(productData);
           alert("Product Updated") 
   }catch(err){
       console.log("Some issue");
@@ -323,7 +335,8 @@ function handleDeleteProduct() {
   document.getElementById("deleteForm").addEventListener("submit",(e)=>{ 
     e.preventDefault();
     var deleteId=document.getElementById("productId").value;
-  fetch(`${apiUrl}/${deleteId}`, {
+    let viewAllProd=apiUrl+'/delete/product';
+  fetch(`${viewAllProd}/${deleteId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'

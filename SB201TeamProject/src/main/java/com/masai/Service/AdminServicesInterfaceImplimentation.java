@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.masai.exception.ApplicationException;
 import com.masai.model.Admin;
 import com.masai.model.Category;
@@ -17,6 +18,7 @@ import com.masai.repository.CategoryRepository;
 import com.masai.repository.CustomerRepository;
 import com.masai.repository.OrdersRepository;
 import com.masai.repository.ProductRepository;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -93,7 +95,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 	
 	
 	@Override
-	public void addProduct(int cateId,Product product) throws ApplicationException {
+	public Product addProduct(int cateId,Product product) throws ApplicationException {
 		log.info("Admin is Adding Product in Service Layer");
 		Optional<Product> opt = pRepo.findById(product.getProductId());
 		if(opt.isPresent() && opt.get().getActive()) {
@@ -109,7 +111,8 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		}
 		optt.get().getProducts().add(product);
 		product.setCategory(optt.get());
-		pRepo.save(product);
+		return 
+				pRepo.save(product);
 	}
 	@Override
 	public void updateProduct(Integer productId, Product product) throws ApplicationException {

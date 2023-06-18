@@ -163,16 +163,15 @@ form.addEventListener('submit', (event) => {
   event.preventDefault();
 
   const customerId = document.querySelector('#customerId').value;
-
-  const url = `${customerApi}/${1}`;
+let customerRemoveApi=`http://localhost:8080/admin/delete/customer`;
+  const url = `${customerRemoveApi}/${customerId}`;
 
   fetch(url, {
-    method: 'PATCH',
+    method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'
-      // Add any other headers required by your API
     },
-    body: JSON.stringify({ active: false }) 
+    // body: JSON.stringify({ active: false }) 
   })
     .then(response => {
       if (response.ok) {
