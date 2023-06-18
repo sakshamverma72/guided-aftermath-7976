@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.masai.exception.ApplicationException;
 import com.masai.model.Admin;
 import com.masai.model.Category;
@@ -18,7 +17,6 @@ import com.masai.repository.CategoryRepository;
 import com.masai.repository.CustomerRepository;
 import com.masai.repository.OrdersRepository;
 import com.masai.repository.ProductRepository;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -257,7 +255,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		if(orders.size()==0) {
 			throw new ApplicationException("No Order Found");
 		}
-		ArrayList<Product> ans = new ArrayList<>();
+		ArrayList<Product>ans = new ArrayList<>();
 		for(Orders ad:orders) {
 			for(Product pro: ad.getProducts()) {
 				ans.add(pro);
@@ -328,25 +326,25 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		return customer.get();
 	}
 	@Override
-	public Customer ChangeRoleCustomer(Integer customerId, Customer role) throws ApplicationException {
-		Optional<Customer> customer = cuRepo.findById(customerId);
-		if(customer.isEmpty() || !customer.get().getActive()) {
+	public Customer ChangeRoleCustomer(Integer customerId, Customer customer) throws ApplicationException {
+		Optional<Customer> customerr = cuRepo.findById(customerId);
+		if(customerr.isEmpty() || !customerr.get().getActive()) {
 			throw new ApplicationException("No Customer Found");
 		}
-//		if(!role.getRole().toUpperCase().equals("ADMIN") || !role.getRole().toUpperCase().equals("CUSTOMER")) {
-//			throw new ApplicationException("Role isn't a Valid one");
-//		}
-		customer.get().setRole("ROLE_"+role.getRole().toUpperCase());
-		cuRepo.save(customer.get());
-		return customer.get();
+		if(!customer.getRole().toUpperCase().equals("ADMIN") && !customer.getRole().toUpperCase().equals("CUSTOMER")) {
+			throw new ApplicationException("Role isn't a Valid one");
+		}
+		customerr.get().setRole("ROLE_"+customer.getRole().toUpperCase());
+		cuRepo.save(customerr.get());
+		return customerr.get();
 	}
-////	public Customer ChangeRoleCustomer(Integer customerId, Customer role) {
-////		// TODO Auto-generated method stub
-////		return null;
-////	}
-//	public Customer ChangeRoleCustomer(Integer customerId, String role) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	@Override
+	public List<Category> getListOfCategory() throws ApplicationException {
+		List<Category> cList=cRepo.findAll();
+		if(cList.size()==0) {
+			throw new ApplicationException("No Category Found");
+		}
+		return cList;
+	}
 	
 }

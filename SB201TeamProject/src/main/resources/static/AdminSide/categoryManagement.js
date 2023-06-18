@@ -10,6 +10,7 @@ function handleCategoryManagement() {
     
     <div class="submenu" id="productSubMenu">
     <button id="addNewCategoryBtn">Add Category</button>
+    <button id="viewAllCategory">View Category</button>
     <button id="removeCategoryBtn">Remove Category</button>
 </div>
 <div id="productContent"><h1 class="bouncing-text">Category Menu</h1></div>
@@ -18,6 +19,9 @@ function handleCategoryManagement() {
 
 var addNewCategoryBtn=document.getElementById("addNewCategoryBtn");
 var removeCategoryBtn=document.getElementById("removeCategoryBtn");
+var vieAllCategoryHandler=document.getElementById("viewAllCategory");
+
+
 
 
 addNewCategoryBtn.addEventListener("click",()=>{
@@ -117,5 +121,58 @@ removeCategoryBtn.addEventListener("click",()=>{
   
 })
 
+
+
+
+
+
+vieAllCategoryHandler.addEventListener("click",()=> {
+    console.log('View Products button clicked');
+   productContent.innerHTML="";
+   productContent.innerHTML=` <div class="viewAllProducts">
+   <h2>Product List</h2>
+   <table id="productTable">
+     <tr style="position:sticky; top:0%; background-color:#111011;">
+     <th>Id</th>
+       <th> Category Name</th>
+       <th>Status</th>
+       </tr>
+       </table>
+       </div>`;
+       fetchProducts();
+ function fetchProducts() {
+  let viewAllProd='http://localhost:8080/admin/category';
+    fetch(viewAllProd)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        var table = document.getElementById('productTable');
+        // table.innerHTML = '';
+
+        for (var i = 0; i < data.length; i++) {
+          
+          var product = data[i];
+
+           var row = table.insertRow();
+           var prodId=row.insertCell();
+           prodId.innerText=product.categoryId;
+          var nameCell = row.insertCell();
+          nameCell.innerText = product.name;
+
+         
     
+          var availableCell = row.insertCell();
+          availableCell.innerText = product.active ? 'Yes' : 'No';
+
+
+          
+        }
+      })
+      .catch(function(error) {
+        console.error('Error:', error);
+      });
+
+    }})
 }
+

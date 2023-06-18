@@ -32,6 +32,7 @@ public class Customer {
 	@Column(unique = true)
 	private String email;
 	@NotNull(message = "Password of customer can't be Null")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private boolean active=true;
