@@ -320,7 +320,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 	@Override
 	public Customer getCustomerByEmail(String email)throws ApplicationException {
 		Optional<Customer> customer = cuRepo.findByEmail(email);
-		if(customer.isEmpty() || !customer.get().getActive()) {
+		if(customer.isEmpty()) {
 			throw new ApplicationException("No Customer Found");
 		}
 		return customer.get();

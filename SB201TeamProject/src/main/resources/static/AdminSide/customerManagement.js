@@ -1,6 +1,6 @@
 const customerBtn = document.getElementById('customerBtn');
 customerBtn.addEventListener('click', handleCustomerManagement);
-const customerApi='https://648c85bd8620b8bae7ed09b3.mockapi.io/customers';
+const customerApi='http://localhost:8080/admin';
 // const content=document.getElementById("content");
 function handleCustomerManagement() {
     console.log('Customer Management button clicked');
@@ -49,7 +49,8 @@ function handleviewAllCustomersBtn() {
   </div>`;
   fetchProducts();
   function fetchProducts() {
-     fetch(customerApi)
+    let getAllCustomersApi=customerApi+'/customers';
+     fetch(getAllCustomersApi)
        .then(function(response) {
          return response.json();
        })
@@ -69,11 +70,14 @@ function handleviewAllCustomersBtn() {
  
            var mailCell = row.insertCell();
            
-           mailCell.innerText = product.mailOrUsername;
+           mailCell.innerText = product.email;
      
  
            var acitveCell = row.insertCell();
-           acitveCell.innerText = product.active;
+           if(product.active==true)
+           acitveCell.innerText = "Active";
+           else
+           acitveCell.innerText = "Deactivated";
  
            var roleCell = row.insertCell();
            roleCell.innerText = product.role;
@@ -163,7 +167,7 @@ form.addEventListener('submit', (event) => {
   event.preventDefault();
 
   const customerId = document.querySelector('#customerId').value;
-let customerRemoveApi=`http://localhost:8080/admin/delete/customer`;
+ let customerRemoveApi=`http://localhost:8080/admin/delete/customer`;
   const url = `${customerRemoveApi}/${customerId}`;
 
   fetch(url, {
@@ -213,8 +217,8 @@ form.addEventListener('submit', (event) => {
   event.preventDefault();
 
   const username = document.querySelector('#username').value;
-
-  const url = `${customerApi}/${1}`;                                //replace username here
+let getSingleCustomer='http://localhost:8080/admin/customer'
+  const url = `${getSingleCustomer}/${username}`;                                //replace username here
 
   fetch(url)
     .then(response => {
@@ -265,11 +269,14 @@ function displaySingleUser(data){
  
            var mailCell = row.insertCell();
            
-           mailCell.innerText = product.mailOrUsername;
+           mailCell.innerText = product.email;
      
  
            var acitveCell = row.insertCell();
-           acitveCell.innerText = product.active;
+           if(product.active==true)
+           acitveCell.innerText = "Active";
+           else
+           acitveCell.innerText = "Deactivated";
  
            var roleCell = row.insertCell();
            roleCell.innerText = product.role;
