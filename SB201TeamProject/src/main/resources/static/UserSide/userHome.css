@@ -121,6 +121,9 @@ header{
     box-shadow: 0px 3px 17px 4px rgba(0,0,0,0.75);
     /* border: 1px solid yellow; */
     height: 85%;
+    overflow-y: scroll;
+    scrollbar-color: rebeccapurple green;
+  box-sizing: border-box;
     margin: auto;
     margin-top: 1%;
 }
@@ -237,6 +240,7 @@ header{
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+
   }
 
   .viewAllProducts h2 {
@@ -256,8 +260,30 @@ header{
   th {
     text-align: left;
   }
-   img {
-    width: 80%;
-    height: auto; /* Maintain aspect ratio */
+
+  .productImage{
+   width: 10%;
   }
-  
+  #productTable img{
+    width: 80%;
+   }
+   #productTable{
+    width: 105%;
+   }
+/* scroll bar handle */
+   ::-webkit-scrollbar {
+    width: 0px;
+  }
+
+      #checkProductAvailability :nth-child(3){
+        background-color: #17191c;
+        width: 40%;
+        height: 5vh;
+        margin: 2vh 12vw;
+        border: 1px solid white;
+        border-radius: 10px;
+        }
+        #checkProductAvailability :nth-child(3):hover{
+          background-color: #ee3600;
+          color: black;
+        }
