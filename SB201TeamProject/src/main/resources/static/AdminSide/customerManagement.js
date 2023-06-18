@@ -164,7 +164,7 @@ form.addEventListener('submit', (event) => {
 
   const customerId = document.querySelector('#customerId').value;
 
-  const url = `${customerApi}/${customerId}`;
+  const url = `${customerApi}/${1}`;
 
   fetch(url, {
     method: 'PATCH',
@@ -275,7 +275,4 @@ function displaySingleUser(data){
            var roleCell = row.insertCell();
            roleCell.innerText = product.role;
   }
-
-
-
 }}
