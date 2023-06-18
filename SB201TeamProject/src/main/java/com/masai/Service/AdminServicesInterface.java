@@ -49,8 +49,11 @@ public interface AdminServicesInterface {
 	Category deleteCategory(Integer categoryId) throws ApplicationException;
 
 	Customer ChangeRoleCustomer(Integer customerId, Customer customer) throws ApplicationException;
+<<<<<<< HEAD
 
 	List<Category> getListOfCategory() throws ApplicationException;
+=======
+>>>>>>> e5dc81224ad5fb3eb68c8c6161a5d1344e989ae4
 
 //	Admin getCustomerDetailsByEmail(String email) throws ApplicationException;
 

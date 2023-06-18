@@ -337,6 +337,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		customerr.get().setRole("ROLE_"+customer.getRole().toUpperCase());
 		cuRepo.save(customerr.get());
 		return customerr.get();
+<<<<<<< HEAD
 	}
 	@Override
 	public List<Category> getListOfCategory() throws ApplicationException {
@@ -345,6 +346,8 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 			throw new ApplicationException("No Category Found");
 		}
 		return cList;
+=======
+>>>>>>> e5dc81224ad5fb3eb68c8c6161a5d1344e989ae4
 	}
 	
 }
