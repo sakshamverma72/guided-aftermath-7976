@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.Service.AdminServicesInterfaceImplimentation;
@@ -163,8 +162,8 @@ public class AdminController {
 	
 	
 //	:::CUSTOMER:::
-	@PatchMapping("/admin/updaterole/customer/{customerId}")
-	public ResponseEntity<Customer> ChangeRoleCustomer(@PathVariable("customerId") Integer customerId , @RequestBody String role) throws ApplicationException{
+	@PatchMapping("/admin/update/role/customer/{customerId}")
+	public ResponseEntity<Customer> ChangeRoleCustomer(@PathVariable("customerId") Integer customerId , @RequestBody Customer role) throws ApplicationException{
 		log.info("Admin is Changing role of a Customer");
 		Customer customer = adminServices.ChangeRoleCustomer(customerId,role);
 		return new ResponseEntity<Customer>(customer,HttpStatus.OK);

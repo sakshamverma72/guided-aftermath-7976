@@ -40,7 +40,7 @@ public class Product {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Category category;
-	@JsonIgnore
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Orders order;
 	public boolean getActive() {

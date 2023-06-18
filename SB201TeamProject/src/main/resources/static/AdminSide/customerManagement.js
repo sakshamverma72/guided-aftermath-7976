@@ -109,37 +109,41 @@ productContent.innerHTML=`
 </form></div>`;
 
 
-    const form = document.querySelector('#roleForm');
+
+const form = document.querySelector('#roleForm');
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
 
   const customerId = document.querySelector('#customerId').value;
-  const role = document.querySelector('#role').value; 
-// let updatedRole="ROLE_"+role;
-  let url = `${customerApi}/${customerId}`;
-console.log(JSON.stringify({ role }));
+  const newRole = document.querySelector('#role').value;
+let updateRoleApi=customerApi+'/update/role/customer';
+  const url = `${updateRoleApi}/${customerId}`;
+
+  const data = {
+    role: newRole
+  };
+console.log(data);
   fetch(url, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ role }) 
+    body: JSON.stringify(data)
   })
     .then(response => {
       if (response.ok) {
-        alert('Role updated successfully.');
         console.log('Role updated successfully.');
+        alert('Role updated successfully.');
       } else {
-        alert('Failed to update role.');
         console.log('Failed to update role.');
+        alert('Failed to update role.');
       }
     })
     .catch(error => {
       console.error('Error:', error);
     });
 });
-
 }
 
 function handledeactivateCustomerBtn() {
