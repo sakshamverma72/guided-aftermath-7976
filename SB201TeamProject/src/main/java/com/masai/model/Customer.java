@@ -36,7 +36,7 @@ public class Customer {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private boolean active=true;
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	private final String role = "ROLE_CUSTOMER";
+	private String role = "ROLE_CUSTOMER";
 	
 	@JsonIgnore
 	@OneToOne(mappedBy = "customer",cascade = CascadeType.ALL)
