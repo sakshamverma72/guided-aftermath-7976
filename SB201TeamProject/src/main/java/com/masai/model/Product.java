@@ -1,7 +1,6 @@
 package com.masai.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
@@ -40,7 +39,7 @@ public class Product {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Category category;
-	@JsonIgnore
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Orders order;
 	public boolean getActive() {
