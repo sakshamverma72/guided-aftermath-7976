@@ -1,6 +1,6 @@
 package com.masai.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,9 +29,9 @@ public class Admin {
 	private String email;
 	@NotNull(message = "Password of admin can't be Null")
 	private String password;
-	@JsonIgnore
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private boolean active=true;
-	@JsonIgnore
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private final String role = "ROLE_ADMIN";
 
 	public boolean getActive() {

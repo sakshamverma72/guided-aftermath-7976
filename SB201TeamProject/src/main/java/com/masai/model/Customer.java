@@ -2,6 +2,7 @@ package com.masai.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -32,9 +33,9 @@ public class Customer {
 	private String email;
 	@NotNull(message = "Password of customer can't be Null")
 	private String password;
-	@JsonIgnore
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private boolean active=true;
-	@JsonIgnore
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private final String role = "ROLE_CUSTOMER";
 	
 	@JsonIgnore

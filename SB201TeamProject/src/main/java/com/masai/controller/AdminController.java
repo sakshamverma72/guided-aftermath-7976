@@ -19,6 +19,7 @@ import com.masai.exception.ApplicationException;
 import com.masai.model.Admin;
 import com.masai.model.Category;
 import com.masai.model.Customer;
+import com.masai.model.Orders;
 import com.masai.model.Product;
 
 import jakarta.validation.Valid;
@@ -45,6 +46,12 @@ public class AdminController {
 		log.info("Admin is fetching customers");
 		List<Customer>customers=adminServices.getAllCustomers();
 		return new ResponseEntity<List<Customer>>(customers,HttpStatus.OK);
+	}
+	@GetMapping("/admin/customer/{email}")
+	public ResponseEntity<Customer> getCustomerByEmail(@PathVariable("email") String email) throws ApplicationException{
+		log.info("Admin is fetching customer by email");
+		Customer customer=adminServices.getCustomerByEmail(email);
+		return new ResponseEntity<Customer>(customer,HttpStatus.OK);
 	}
 	@GetMapping("/admin/categories")
 	public ResponseEntity<List<Category>> getAllCategory() throws ApplicationException{
@@ -76,10 +83,10 @@ public class AdminController {
 //	:::ORDER:::
 	
 	@DeleteMapping("/admin/delete/order/{orderId}")
-	public ResponseEntity<String> deleteOrder(@PathVariable("orderId") Integer orderId ) throws ApplicationException{
+	public ResponseEntity<Orders> deleteOrder(@PathVariable("orderId") Integer orderId ) throws ApplicationException{
 		log.info("Admin is Deleting orders");
-		adminServices.deleteOrder(orderId);
-		return new ResponseEntity<String>("Order has been deleted",HttpStatus.OK);
+		Orders order = adminServices.deleteOrder(orderId);
+		return new ResponseEntity<Orders>(order,HttpStatus.OK);
 	}
 	
 	
@@ -87,22 +94,22 @@ public class AdminController {
 //	:::ADMIN:::
 	
 	@PostMapping("/admin/add/admins")
-	public ResponseEntity<String> addAdmin(@RequestBody @Valid Admin admin) throws ApplicationException{
+	public ResponseEntity<Admin> addAdmin(@RequestBody @Valid Admin admin) throws ApplicationException{
 		log.info("Admin is adding another Admin");
-		adminServices.addAdmin(admin);
-		return new ResponseEntity<String>("Added Succefully...",HttpStatus.ACCEPTED);
+		Admin adminn=adminServices.addAdmin(admin);
+		return new ResponseEntity<Admin>(adminn,HttpStatus.ACCEPTED);
 	}
 	@PutMapping("/admin/update/admin/{adminId}")
-	public ResponseEntity<String> updateAdmin(@PathVariable("adminId") Integer adminId,@RequestBody @Valid Admin admin) throws ApplicationException{
+	public ResponseEntity<Admin> updateAdmin(@PathVariable("adminId") Integer adminId,@RequestBody @Valid Admin admin) throws ApplicationException{
 		log.info("Admin is Deleteing another Admin");
-		adminServices.updateAdmin(adminId,admin);
-		return new ResponseEntity<String>("Updated Succefully...",HttpStatus.ACCEPTED);
+		Admin adminn=adminServices.updateAdmin(adminId,admin);
+		return new ResponseEntity<Admin>(adminn,HttpStatus.ACCEPTED);
 	}
 	@DeleteMapping("/admin/delete/admin/{adminId}")
-	public ResponseEntity<String> deleteAdmin(@PathVariable("adminId") Integer adminId) throws ApplicationException{
+	public ResponseEntity<Admin> deleteAdmin(@PathVariable("adminId") Integer adminId) throws ApplicationException{
 		log.info("Admin is Deleteing another Admin");
-		adminServices.deleteAdmin(adminId);
-		return new ResponseEntity<String>("Deleted Succefully...",HttpStatus.OK);
+		Admin admin=adminServices.deleteAdmin(adminId);
+		return new ResponseEntity<Admin>(admin,HttpStatus.OK);
 	}
 	
 	
@@ -110,22 +117,22 @@ public class AdminController {
 //	:::PRODUTC:::
 	
 	@PostMapping("/admin/add/category/{categoryId}/products")
-	public ResponseEntity<String> addProduct(@PathVariable("categoryId") Integer cateId,@RequestBody @Valid Product product) throws ApplicationException{
+	public ResponseEntity<Product> addProduct(@PathVariable("categoryId") Integer cateId,@RequestBody @Valid Product product) throws ApplicationException{
 		log.info("Admin is adding another Product");
-		adminServices.addProduct(cateId,product);
-		return new ResponseEntity<String>("Added Succefully...",HttpStatus.ACCEPTED);
+		Product productt = adminServices.addProduct(cateId,product);
+		return new ResponseEntity<Product>(productt,HttpStatus.ACCEPTED);
 	}
 	@PutMapping("/admin/update/product/{productId}")
-	public ResponseEntity<String> updateProduct(@PathVariable("productId") Integer productId,@RequestBody @Valid Product product) throws ApplicationException{
+	public ResponseEntity<Product> updateProduct(@PathVariable("productId") Integer productId,@RequestBody @Valid Product product) throws ApplicationException{
 		log.info("Admin is Updating a Product");
-		adminServices.updateProduct(productId,product);
-		return new ResponseEntity<String>("updated Succefully...",HttpStatus.OK);
+		Product productt = adminServices.updateProduct(productId,product);
+		return new ResponseEntity<Product>(productt,HttpStatus.OK);
 	}
 	@DeleteMapping("/admin/delete/product/{productId}")
-	public ResponseEntity<String> deleteProduct(@PathVariable("productId") Integer productId) throws ApplicationException{
+	public ResponseEntity<Product> deleteProduct(@PathVariable("productId") Integer productId) throws ApplicationException{
 		log.info("Admin is Deleteing a Product");
-		adminServices.deleteProduct(productId);
-		return new ResponseEntity<String>("Deleted Succefully...",HttpStatus.OK);
+		Product productt = adminServices.deleteProduct(productId);
+		return new ResponseEntity<Product>(productt,HttpStatus.OK);
 	}
 	
 	
@@ -133,22 +140,22 @@ public class AdminController {
 //	:::CATEGORY:::
 	
 	@PostMapping("/admin/add/categories")
-	public ResponseEntity<String> addCategory(@RequestBody @Valid Category category) throws ApplicationException{
+	public ResponseEntity<Category> addCategory(@RequestBody @Valid Category category) throws ApplicationException{
 		log.info("Admin is adding another Category");
-		adminServices.addCategory(category);
-		return new ResponseEntity<String>("Added Succefully...",HttpStatus.ACCEPTED);
+		Category categoryy = adminServices.addCategory(category);
+		return new ResponseEntity<Category>(categoryy,HttpStatus.ACCEPTED);
 	}
 	@PutMapping("/admin/update/category/{categoryId}")
-	public ResponseEntity<String> updateCategory(@PathVariable("categoryId") Integer categoryId,@RequestBody @Valid Category category) throws ApplicationException{
+	public ResponseEntity<Category> updateCategory(@PathVariable("categoryId") Integer categoryId,@RequestBody @Valid Category category) throws ApplicationException{
 		log.info("Admin is Updating a Category");
-		adminServices.updateCategory(categoryId,category);
-		return new ResponseEntity<String>("updated Succefully...",HttpStatus.OK);
+		Category categoryy = adminServices.updateCategory(categoryId,category);
+		return new ResponseEntity<Category>(categoryy,HttpStatus.ACCEPTED);
 	}
 	@DeleteMapping("/admin/delete/category/{categoryId}")
-	public ResponseEntity<String> deleteCategory(@PathVariable("categoryId") Integer categoryId) throws ApplicationException{
+	public ResponseEntity<Category> deleteCategory(@PathVariable("categoryId") Integer categoryId) throws ApplicationException{
 		log.info("Admin is Deleteing a Category");
-		adminServices.deleteCategory(categoryId);
-		return new ResponseEntity<String>("Deleted Succefully...",HttpStatus.OK);
+		Category categoryy = adminServices.deleteCategory(categoryId);
+		return new ResponseEntity<Category>(categoryy,HttpStatus.OK);
 	}
 	
 	
@@ -156,10 +163,10 @@ public class AdminController {
 //	:::CUSTOMER:::
 	
 	@DeleteMapping("/admin/delete/customer/{customerId}")
-	public ResponseEntity<String> deleteCustomer(@PathVariable("customerId") Integer customerId) throws ApplicationException{
+	public ResponseEntity<Customer> deleteCustomer(@PathVariable("customerId") Integer customerId) throws ApplicationException{
 		log.info("Admin is Deleteing a Customer");
-		adminServices.deleteCustomer(customerId);
-		return new ResponseEntity<String>("Deleted Succefully...",HttpStatus.OK);
+		Customer customer = adminServices.deleteCustomer(customerId);
+		return new ResponseEntity<Customer>(customer,HttpStatus.OK);
 	}
 	
 	

@@ -3,6 +3,7 @@ package com.masai.model;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -25,7 +26,7 @@ public class Category {
 	private int categoryId;
 	@NotNull(message = "Name of product can't be Null")
 	private String name;
-	@JsonIgnore
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private boolean active=true;
 	@JsonIgnore
 	@OneToMany(mappedBy = "category",cascade = CascadeType.ALL)

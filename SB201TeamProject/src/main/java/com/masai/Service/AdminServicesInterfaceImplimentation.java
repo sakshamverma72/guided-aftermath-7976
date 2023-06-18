@@ -36,7 +36,7 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 //	private PasswordEncoder pass;
 	
 	@Override
-	public void addAdmin(Admin admin) throws ApplicationException {
+	public Admin addAdmin(Admin admin) throws ApplicationException {
 		log.info("Admin is Adding customer in Service Layer");
 		Optional<Admin> opt = aRepo.findById(admin.getAdminId());
 		if(opt.isPresent() && opt.get().getActive()) {
@@ -48,10 +48,11 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		if(admin==null) throw new ApplicationException("Fields don't have any data");
 //		admin.setPassword(pass.enCode(admin.getPassword()));
 		aRepo.save(admin);
+		return admin;
 		
 	}
 	@Override
-	public void updateAdmin(Integer adminId,Admin admin) throws ApplicationException{
+	public Admin updateAdmin(Integer adminId,Admin admin) throws ApplicationException{
 		log.info("Admin is Updating an Admin Details in Service Layer");
 		Optional<Admin> opt = aRepo.findById(adminId);
 		if(opt.isEmpty() || !opt.get().getActive()) {
@@ -66,10 +67,10 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 //		opt.get().setPassword(pass.enCode(admin.getPassword()));
 		opt.get().setPassword(admin.getPassword());
 		aRepo.save(opt.get());
-		
+		return opt.get();
 	}
 	@Override
-	public void deleteAdmin(Integer adminId)throws ApplicationException {
+	public Admin deleteAdmin(Integer adminId)throws ApplicationException {
 		log.info("Admin is Deleting an Admin in Service Layer");
 		Optional<Admin> opt = aRepo.findById(adminId);
 		if(opt.isEmpty()  ||  !opt.get().getActive()) {
@@ -77,9 +78,10 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		}
 		opt.get().setActive(false);
 		aRepo.save(opt.get());
+		return opt.get();
 	}
 	@Override
-	public void deleteCustomer(Integer customerId) throws ApplicationException {
+	public Customer deleteCustomer(Integer customerId) throws ApplicationException {
 		log.info("Admin is Deleting a Customer in Service Layer");
 		Optional<Customer> opt = cuRepo.findById(customerId);
 		if(opt.isEmpty() || !opt.get().getActive()) {
@@ -87,13 +89,14 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		}
 		opt.get().setActive(false);
 		cuRepo.save(opt.get());
+		return opt.get();
 	}
 	
 	
 	
 	
 	@Override
-	public void addProduct(int cateId,Product product) throws ApplicationException {
+	public Product addProduct(int cateId,Product product) throws ApplicationException {
 		log.info("Admin is Adding Product in Service Layer");
 		Optional<Product> opt = pRepo.findById(product.getProductId());
 		if(opt.isPresent() && opt.get().getActive()) {
@@ -110,11 +113,12 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		optt.get().getProducts().add(product);
 		product.setCategory(optt.get());
 		pRepo.save(product);
+		return product;
 	}
 	@Override
-	public void updateProduct(Integer productId, Product product) throws ApplicationException {
+	public Product updateProduct(Integer productId, Product product) throws ApplicationException {
 		log.info("Admin is Updating Product in Service Layer");
-		Optional<Product> opt = pRepo.findById(product.getProductId());
+		Optional<Product> opt = pRepo.findById(productId);
 		if(opt.isEmpty() || !opt.get().getActive()){
 			throw new ApplicationException("No Product Found with this ID...");
 		}
@@ -123,15 +127,18 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		}
 		if(product==null) throw new ApplicationException("Fields don't have any data");
 		opt.get().setAvailablility(product.getAvailablility());
-		opt.get().setCategory(product.getCategory());
 		opt.get().setDescription(product.getDescription());
 		opt.get().setImageUrl(product.getImageUrl());
 		opt.get().setName(product.getName());
 		opt.get().setPrice(product.getPrice());
+//		opt.get().setCategory(opt.get().getCategory());
+//		opt.get().setActive(opt.get().getActive());
+//		opt.get().setOrder(opt.get().getOrder());
 		pRepo.save(opt.get());
+		return opt.get();
 	}
 	@Override
-	public void deleteProduct(Integer productId) throws ApplicationException{
+	public Product deleteProduct(Integer productId) throws ApplicationException{
 		log.info("Admin is Deleting Product in Service Layer");
 		Optional<Product> opt = pRepo.findById(productId);
 		if(opt.isEmpty() || !opt.get().getActive()){
@@ -139,12 +146,13 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		}
 		opt.get().setActive(false);
 		pRepo.save(opt.get());
+		return opt.get();
 	}
 	
 	
 	
 	@Override
-	public void addCategory(Category category) throws ApplicationException{
+	public Category addCategory(Category category) throws ApplicationException{
 		log.info("Admin is Adding Category in Service Layer");
 		Optional<Category> opt = cRepo.findById(category.getCategoryId());
 		if(opt.isPresent() && opt.get().getActive()) {
@@ -155,8 +163,10 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		}
 		if(category==null) throw new ApplicationException("Fields don't have any data");
 		cRepo.save(category);
+		return category;
 	}
-	public void deleteCategory(Integer categoryId) throws ApplicationException{
+	@Override
+	public Category deleteCategory(Integer categoryId) throws ApplicationException{
 		log.info("Admin is Deleting a category in Service Layer");
 		Optional<Category> opt = cRepo.findById(categoryId);
 		if(opt.isEmpty() || !opt.get().getActive()) {
@@ -168,9 +178,10 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 			product.setActive(false);
 		}
 		cRepo.save(opt.get());
+		return opt.get();
 	}
 	@Override
-	public void updateCategory(Integer categoryId, Category category)throws ApplicationException{
+	public Category updateCategory(Integer categoryId, Category category)throws ApplicationException{
 		log.info("Admin is Updating a category in Service Layer");
 		Optional<Category> opt = cRepo.findById(categoryId);
 		if(opt.isEmpty() || !opt.get().getActive()) {
@@ -181,7 +192,10 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		}
 		if(category==null) throw new ApplicationException("Fields don't have any data");
 		opt.get().setName(category.getName());
+//		opt.get().setActive(opt.get().getActive());
+//		opt.get().setProducts(opt.get().getProducts());
 		cRepo.save(opt.get());
+		return opt.get();
 	}
 	@Override
 	public List<Admin> getAllAdmin()throws ApplicationException{
@@ -278,19 +292,22 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		return ans;
 	}
 	@Override
-	public void deleteOrder(Integer orderId)throws ApplicationException{
+	public Orders deleteOrder(Integer orderId)throws ApplicationException{
 		Optional<Orders>opt = oRepo.findById(orderId);
 		if(opt.isEmpty() || !opt.get().getActive()) {
 			throw new ApplicationException("No Order Found with this Id...");
 		}
 		opt.get().setActive(false);
 		oRepo.save(opt.get());
+		return opt.get();
 	}
+	
 //	@Override
 //	public Admin getDetails(String email)throws ApplicationException {
 //		
 //		return aRepo.findByEmail(email).orElseThrow(() -> new ApplicationException("Customer Not found with Email: "+email));
 //	}
+	
 	@Override
 	public List<Customer> getAllCustomers()throws ApplicationException {
 		List<Customer>customers = cuRepo.findAll();
@@ -299,4 +316,14 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		}
 		return customers;
 	}
+	
+	@Override
+	public Customer getCustomerByEmail(String email)throws ApplicationException {
+		Optional<Customer> customer = cuRepo.findByEmail(email);
+		if(customer.isEmpty() || !customer.get().getActive()) {
+			throw new ApplicationException("No Customer Found");
+		}
+		return customer.get();
+	}
+	
 }
