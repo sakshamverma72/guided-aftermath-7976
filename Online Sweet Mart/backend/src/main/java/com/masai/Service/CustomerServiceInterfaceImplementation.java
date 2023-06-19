@@ -1,10 +1,8 @@
 package com.masai.Service;
 
-import com.masai.exception.ApplicationException;
 import com.masai.exception.CustomerException;
 import com.masai.model.*;
 import com.masai.repository.*;
-import jakarta.persistence.criteria.Order;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +13,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class CustomerServiceInterfaceImplementation {
+public class CustomerServiceInterfaceImplementation implements CustomerServiceInterface{
 
 
     @Autowired
@@ -33,7 +31,7 @@ public class CustomerServiceInterfaceImplementation {
     private OrderBillRepository orderBillRepository;
 
     //    customer started
-    public Customer addCustomer(Customer customer) {
+    public Customer addCustomer(Customer customer)throws CustomerException {
         log.info("adding customer");
         Optional<Customer> opt = customerRepository.findByEmail(customer.getEmail());
         if (opt.isPresent()) {
@@ -74,7 +72,7 @@ public class CustomerServiceInterfaceImplementation {
     }
 
 
-    public Customer updateCustomer(Integer customerId, Customer customer) {
+    public Customer updateCustomer(Integer customerId, Customer customer) throws CustomerException{
         log.info("Updating customer");
         Optional<Customer> opt = customerRepository.findById(customerId);
         if (opt.isEmpty() || !opt.get().getActive()) {
@@ -91,7 +89,7 @@ public class CustomerServiceInterfaceImplementation {
         return customerRepository.save(c);
     }
 
-    public Customer deleteCustomer(Integer customerId) {
+    public Customer deleteCustomer(Integer customerId)throws CustomerException {
         log.info("deleting customer");
         Optional<Customer> opt = customerRepository.findById(customerId);
         if (opt.isEmpty() || !opt.get().getActive()) {
@@ -113,7 +111,7 @@ public class CustomerServiceInterfaceImplementation {
 //    cart started
 
 
-    public Cart addOrdersToCart(Integer customerId, Integer orderId) {
+    public Cart addOrdersToCart(Integer customerId, Integer orderId)throws CustomerException {
         log.info("adding orders to the cart");
         Optional<Customer> opt1 = customerRepository.findById(customerId);
 
@@ -143,8 +141,9 @@ public class CustomerServiceInterfaceImplementation {
     }
 
 
-    public Cart deleteOrdersFromCart(Integer customerId, Integer orderId) {
+    public Cart deleteOrdersFromCart(Integer customerId, Integer orderId)throws CustomerException {
         log.info("removing orders from the cart");
+
         Optional<Customer> opt1 = customerRepository.findById(customerId);
 
 
@@ -189,7 +188,7 @@ public class CustomerServiceInterfaceImplementation {
 
 
     //    admin side .......................................
-    public List<Orders> showAllOrdersInCart(Integer customerId) {
+    public List<Orders> showAllOrdersInCart(Integer customerId) throws CustomerException{
         log.info("showing all orders in particular customer's cart");
         Optional<Customer> opt = customerRepository.findById(customerId);
 
@@ -215,7 +214,7 @@ public class CustomerServiceInterfaceImplementation {
 //cart finished
 
 
-    public Orders createOrder() {
+    public Orders createOrder() throws CustomerException{
         log.info("creating order");
 //        Optional<Orders> opt = orderRepository.findById(order.getOrderId());
 
@@ -237,7 +236,7 @@ public class CustomerServiceInterfaceImplementation {
 
 
     //    orders started
-    public Orders addProductInOrder(Integer orderId, Integer productId) {
+    public Orders addProductInOrder(Integer orderId, Integer productId) throws CustomerException{
         log.info("adding product into order");
 
         Optional<Product> opt1 = productRepository.findById(productId);
@@ -298,7 +297,7 @@ public class CustomerServiceInterfaceImplementation {
     }
 
 
-    public Orders deleteProductFromOrders(Integer orderId, Integer productId) {
+    public Orders deleteProductFromOrders(Integer orderId, Integer productId) throws CustomerException{
         log.info("removing product from the orders");
         Optional<Product> opt1 = productRepository.findById(productId);
 
@@ -340,7 +339,7 @@ public class CustomerServiceInterfaceImplementation {
     }
 
 
-    public Orders deleteOrders(Integer orderId) {
+    public Orders deleteOrders(Integer orderId) throws CustomerException{
         log.info("deleting order");
 
 
@@ -368,7 +367,7 @@ public class CustomerServiceInterfaceImplementation {
 //orders finished
 
 
-    public OrderBill addOrderBill(Integer orderId) {
+    public OrderBill addOrderBill(Integer orderId) throws CustomerException{
         log.info("adding order bill");
 
         Optional<Orders> opt = orderRepository.findById(orderId);
@@ -419,7 +418,7 @@ public class CustomerServiceInterfaceImplementation {
     }
 
 
-    public List<OrderBill> showAllOrderBill(Integer customerId) {
+    public List<OrderBill> showAllOrderBill(Integer customerId) throws CustomerException{
         log.info("fetching all order bill");
 
         Optional<Customer> opt = customerRepository.findById(customerId);
@@ -451,7 +450,7 @@ public class CustomerServiceInterfaceImplementation {
     }
 
 
-    public Boolean customerLogin(String email, String password) {
+    public Boolean customerLogin(String email, String password) throws CustomerException{
 
         log.info("customer login");
         Optional<Customer> opt = customerRepository.findByEmail(email);
@@ -469,7 +468,7 @@ public class CustomerServiceInterfaceImplementation {
 
 //    helping
 
-    public List<Orders> getOrderList(){
-        return orderRepository.findAll();
-    }
+//    public List<Orders> getOrderList(){
+//        return orderRepository.findAll();
+//    }
 }
