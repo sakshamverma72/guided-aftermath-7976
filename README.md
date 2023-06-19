@@ -4,7 +4,7 @@
 This is an backend application in which me my team of 3 members have created restful API to mimic the working of online sweet shop. We have used spring security to authenticate and authorise customer and admin access to the application. For the frotend part we have used HTML, CSS and JS.
 
 
-# features
+# Features
 
 * Customer and admin both have been authenticated using spring security
 * We have created multiple modules to facilitate the seamless transections between the application and database
@@ -31,7 +31,7 @@ This is an backend application in which me my team of 3 members have created res
 # ER Diagram
 The following Diagram depicts the flow of our Entity Relation Diagram to simplify the work flow.
 
-<img src='./er-diagram/online trip management system.png'/>
+<img src='./ER_Diagram/Sweet_Mart_ER_Diagram.png'/>
 
 ## Installation & Run
 
