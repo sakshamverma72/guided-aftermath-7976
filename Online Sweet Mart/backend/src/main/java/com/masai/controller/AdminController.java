@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -66,16 +67,16 @@ public class AdminController {
 		return new ResponseEntity<List<Product>>(products,HttpStatus.OK);
 	}
 	@GetMapping("/admin/orders")
-	public ResponseEntity<List<Product>> getAllOrders() throws ApplicationException{
+	public ResponseEntity<List<Orders>> getAllOrders() throws ApplicationException{
 		log.info("Admin is fetching orders");
-		List<Product>orders=adminServices.getAllOrders();
-		return new ResponseEntity<List<Product>>(orders,HttpStatus.OK);
+		List<Orders>orders=adminServices.getAllOrders();
+		return new ResponseEntity<List<Orders>>(orders,HttpStatus.OK);
 	}
-	@GetMapping("/admin/customer/{customerId}/orders")
-	public ResponseEntity<List<Product>> getAllOrdersOfCustomer(@PathVariable("customerId") Integer customerId ) throws ApplicationException{
+	@GetMapping("/admin/customer/{username}/orders")
+	public ResponseEntity<List<Object>> getAllOrdersOfCustomer(@PathVariable("username") String username ) throws ApplicationException{
 		log.info("Admin is fetching orders of a customer");
-		List<Product>orders=adminServices.getAllOrdersOfCustomer(customerId);
-		return new ResponseEntity<List<Product>>(orders,HttpStatus.OK);
+		List<Object>orders=adminServices.getAllOrdersOfCustomer(username);
+		return new ResponseEntity<List<Object>>(orders,HttpStatus.OK);
 	}
 	
 	

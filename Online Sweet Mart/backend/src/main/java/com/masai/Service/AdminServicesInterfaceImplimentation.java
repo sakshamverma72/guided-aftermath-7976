@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.masai.exception.ApplicationException;
 import com.masai.model.Admin;
 import com.masai.model.Category;
@@ -17,6 +18,7 @@ import com.masai.repository.CategoryRepository;
 import com.masai.repository.CustomerRepository;
 import com.masai.repository.OrdersRepository;
 import com.masai.repository.ProductRepository;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -249,47 +251,31 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		return ans;
 	}
 	@Override
-	public List<Product> getAllOrders() throws ApplicationException{
+	public List<Orders> getAllOrders() throws ApplicationException{
 		
 		List<Orders>orders = oRepo.findAll();
 		if(orders.size()==0) {
 			throw new ApplicationException("No Order Found");
 		}
-		ArrayList<Product>ans = new ArrayList<>();
-		for(Orders ad:orders) {
-			for(Product pro: ad.getProducts()) {
-				ans.add(pro);
-			}
-		}
-		if(ans.size()==0) {
-			throw new ApplicationException("No ordered Product Found");
-		}
-		return ans;
+		return orders;
 	}
 	@Override
-	public List<Product> getAllOrdersOfCustomer(Integer customerId) throws ApplicationException{
-		// TODO Auto-generated method stub
-		Optional<Customer> opt = cuRepo.findById(customerId);
+	public List<Object> getAllOrdersOfCustomer(String customerId) throws ApplicationException{
+		Optional<Customer> opt = cuRepo.findByEmail(customerId);
 		if(opt.isEmpty() || !opt.get().getActive()) {
 			throw new ApplicationException("No Customer Found with these Details...");
 		}
 		if(opt.get().getCart()==null) {
-			throw new ApplicationException("Cart of customer don't have any Order...");
+			throw new ApplicationException("Cart of customer doesn't have any Order...");
 		}
 		List<Orders>orders = opt.get().getCart().getOrders();
 		if(orders.size()==0) {
 			throw new ApplicationException("No Order Found");
 		}
-		ArrayList<Product>ans = new ArrayList<>();
-		for(Orders ad:orders) {
-			for(Product pro: ad.getProducts()) {
-				ans.add(pro);
-			}
-		}
-		if(ans.size()==0) {
-			throw new ApplicationException("No Product Found in customer's Orders");
-		}
-		return ans;
+		List<Object> obj=new ArrayList<>();
+		obj.add(opt.get());
+		obj.add(orders);
+		return obj;
 	}
 	@Override
 	public Orders deleteOrder(Integer orderId)throws ApplicationException{
@@ -326,23 +312,15 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		return customer.get();
 	}
 	@Override
-	public Customer ChangeRoleCustomer(Integer customerId, Customer cust) throws ApplicationException {
+	public Customer ChangeRoleCustomer(Integer customerId, Customer customer) throws ApplicationException {
 		Optional<Customer> customerr = cuRepo.findById(customerId);
 		if(customerr.isEmpty() || !customerr.get().getActive()) {
 			throw new ApplicationException("No Customer Found");
 		}
-//		if(!customer.getRole().toUpperCase().equals("ADMIN") && !customer.getRole().toUpperCase().equals("CUSTOMER")) {
-//			System.out.println(customer.getRole().toUpperCase());
-//			throw new ApplicationException("Role isn't a Valid one");
-//		}
-		
-//		System.out.println(customerr.get().getRole());
-//		customerr.get().setRole(null);
-//		cuRepo.save(customerr.get());
-//		System.out.println(cust.getRole());
-//		
-		customerr.get().setRole(cust.getRole().toUpperCase());
-		System.out.println(customerr.get().getRole());
+		if(!customer.getRole().toUpperCase().equals("ADMIN") && !customer.getRole().toUpperCase().equals("CUSTOMER")) {
+			throw new ApplicationException("Role isn't a Valid one");
+		}
+		customerr.get().setRole("ROLE_"+customer.getRole().toUpperCase());
 		cuRepo.save(customerr.get());
 		return customerr.get();
 

@@ -36,9 +36,9 @@ public interface AdminServicesInterface {
 
 	List<Category> getAllCategory() throws ApplicationException;
 
-	List<Product> getAllOrders() throws ApplicationException;
+	List<Orders> getAllOrders() throws ApplicationException;
 
-	List<Product> getAllOrdersOfCustomer(Integer customerId) throws ApplicationException;
+	List<Object> getAllOrdersOfCustomer(String customerId) throws ApplicationException;
 
 	Orders deleteOrder(Integer orderId) throws ApplicationException;
 

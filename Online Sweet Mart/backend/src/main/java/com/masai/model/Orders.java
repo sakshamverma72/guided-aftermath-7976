@@ -33,6 +33,7 @@ public class Orders {
 	@OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
 	private List<Product> products;
 	@JsonIgnore
+//	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@OneToOne(mappedBy = "orders",cascade = CascadeType.ALL)
 	private OrderBill orderBill;
 	public boolean getActive() {
