@@ -50,5 +50,5 @@ setInterval(updateClock, 1000);
 
 function handleLogout() {
     console.log('Logout button clicked');
-  window.location="www.goole.com";
+  window.location.href="../LoginSignUpSide/Login.html";
 }

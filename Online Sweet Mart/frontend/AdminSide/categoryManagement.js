@@ -163,7 +163,7 @@ vieAllCategoryHandler.addEventListener("click",()=> {
          
     
           var availableCell = row.insertCell();
-          availableCell.innerText = product.active ? 'Available' : 'Removed';
+          availableCell.innerText = product.active ? 'Activated' : 'Removed';
 
 
           
