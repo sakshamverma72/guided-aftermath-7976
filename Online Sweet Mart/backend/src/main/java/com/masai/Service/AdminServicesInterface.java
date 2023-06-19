@@ -2,7 +2,7 @@ package com.masai.Service;
 
 import java.util.List;
 
-import com.masai.exception.ApplicationException;
+import com.masai.exception.AdminException;
 import com.masai.model.Admin;
 import com.masai.model.Category;
 import com.masai.model.Customer;
@@ -12,45 +12,45 @@ import com.masai.model.Product;
 
 public interface AdminServicesInterface {
 
-	Admin addAdmin(Admin admin) throws ApplicationException;
+	Admin addAdmin(Admin admin) throws AdminException;
 
-	Product addProduct(int cateId,Product product) throws ApplicationException;
+	Product addProduct(int cateId,Product product) throws AdminException;
 
-	Category addCategory(Category category) throws ApplicationException;
+	Category addCategory(Category category) throws AdminException;
 
-	Admin deleteAdmin(Integer adminId) throws ApplicationException;
+	Admin deleteAdmin(Integer adminId) throws AdminException;
 
-	Admin updateAdmin(Integer adminId, Admin admin) throws ApplicationException;
+	Admin updateAdmin(Integer adminId, Admin admin) throws AdminException;
 
-	Customer deleteCustomer(Integer customerId) throws ApplicationException;
+	Customer deleteCustomer(Integer customerId) throws AdminException;
 
-	Product updateProduct(Integer productId, Product product) throws ApplicationException;
+	Product updateProduct(Integer productId, Product product) throws AdminException;
 
-	Product deleteProduct(Integer productId) throws ApplicationException;
+	Product deleteProduct(Integer productId) throws AdminException;
 
-	Category updateCategory(Integer categoryId, Category category) throws ApplicationException;
+	Category updateCategory(Integer categoryId, Category category) throws AdminException;
 
-	List<Admin> getAllAdmin() throws ApplicationException;
+	List<Admin> getAllAdmin() throws AdminException;
 
-	List<Product> getAllProduct() throws ApplicationException;
+	List<Product> getAllProduct() throws AdminException;
 
-	List<Category> getAllCategory() throws ApplicationException;
+	List<Category> getAllCategory() throws AdminException;
 
-	List<Product> getAllOrders() throws ApplicationException;
+	List<Orders> getAllOrders() throws AdminException;
 
-	List<Product> getAllOrdersOfCustomer(Integer customerId) throws ApplicationException;
+	List<Orders> getAllOrdersOfCustomer(Integer customerId) throws AdminException;
 
-	Orders deleteOrder(Integer orderId) throws ApplicationException;
+	Orders deleteOrder(Integer orderId) throws AdminException;
 
-	List<Customer> getAllCustomers() throws ApplicationException;
+	List<Customer> getAllCustomers() throws AdminException;
 
-	Customer getCustomerByEmail(String email) throws ApplicationException;
+	Customer getCustomerByEmail(String email) throws AdminException;
 
-	Category deleteCategory(Integer categoryId) throws ApplicationException;
+	Category deleteCategory(Integer categoryId) throws AdminException;
 
-	Customer ChangeRoleCustomer(Integer customerId, Customer customer) throws ApplicationException;
+	Customer ChangeRoleCustomer(Integer customerId, Customer customer) throws AdminException;
 
-	List<Category> getListOfCategory() throws ApplicationException;
+	List<Category> getListOfCategory() throws AdminException;
 
 
 //	Admin getCustomerDetailsByEmail(String email) throws ApplicationException;

@@ -20,8 +20,8 @@ public class GlobalExceptions {
 		my.setDes(req.getDescription(false));
 		return new ResponseEntity<MyErrorClass>(my, HttpStatus.BAD_GATEWAY);
 	}
-	@ExceptionHandler(ApplicationException.class)
-	public ResponseEntity<MyErrorClass> applicationException(ApplicationException e , WebRequest req){
+	@ExceptionHandler(AdminException.class)
+	public ResponseEntity<MyErrorClass> applicationException(AdminException e , WebRequest req){
 		MyErrorClass my = new MyErrorClass();
 		my.setDateTime(LocalDateTime.now());
 		my.setMsg(e.getMessage());

@@ -1,7 +1,6 @@
 package com.masai.controller;
 
-import com.masai.Service.CustomerServiceInterfaceImplementation;
-import com.masai.exception.CustomerException;
+import com.masai.Service.CustomerServiceInterface;
 import com.masai.model.*;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +19,7 @@ import java.util.Optional;
 public class CustomerController {
 
     @Autowired
-    private CustomerServiceInterfaceImplementation customerService;
+    private CustomerServiceInterface customerService;
 
     @PostMapping("/customer/signup")
     public ResponseEntity<Customer> addCustomer(@RequestBody @Valid Customer customer) {
@@ -149,8 +148,8 @@ public class CustomerController {
 
 
 
-    @GetMapping("/customer/allOOrders")
-    public ResponseEntity<List<Orders>> getOrderList(){
-        return new ResponseEntity<>(customerService.getOrderList(), HttpStatus.CREATED);
-    }
+//    @GetMapping("/customer/allOOrders")
+//    public ResponseEntity<List<Orders>> getOrderList(){
+//        return new ResponseEntity<>(customerService.getOrderList(), HttpStatus.CREATED);
+//    }
 }

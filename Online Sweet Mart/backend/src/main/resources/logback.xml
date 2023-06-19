@@ -3,8 +3,8 @@
 
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 
-    <property name="LOG_FILE_INFO" value="D:/error/info.log}"/>
-    <property name="LOG_FILE_ERROR" value="D:/error/error.log}"/>
+    <property name="LOG_FILE_INFO" value="C:/error/info.log}"/>
+    <property name="LOG_FILE_ERROR" value="C:/error/error.log}"/>
 
     <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
