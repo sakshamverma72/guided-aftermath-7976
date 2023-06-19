@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.Service.AdminServicesInterfaceImplimentation;
@@ -29,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins= "*")
 public class AdminController {
 	@Autowired
 	private AdminServicesInterfaceImplimentation adminServices;
@@ -160,13 +159,19 @@ public class AdminController {
 		return new ResponseEntity<Category>(categoryy,HttpStatus.OK);
 	}
 	
+	@GetMapping("/admin/category")
+	public ResponseEntity<List<Category>> getAllCategories() throws ApplicationException{
+		log.info("Admin is Getting All Categories");
+		List<Category> category=adminServices.getListOfCategory();
+		return new ResponseEntity<>(category,HttpStatus.OK);
+	}
 	
 	
 //	:::CUSTOMER:::
-	@PatchMapping("/admin/updaterole/customer/{customerId}")
-	public ResponseEntity<Customer> ChangeRoleCustomer(@PathVariable("customerId") Integer customerId , @RequestBody String role) throws ApplicationException{
+	@PostMapping("/admin/updaterole/customer/{customerId}")
+	public ResponseEntity<Customer> ChangeRoleCustomer(@PathVariable("customerId") Integer customerId , @RequestBody Customer cutomerr) throws ApplicationException{
 		log.info("Admin is Changing role of a Customer");
-		Customer customer = adminServices.ChangeRoleCustomer(customerId,role);
+		Customer customer = adminServices.ChangeRoleCustomer(customerId,cutomerr);
 		return new ResponseEntity<Customer>(customer,HttpStatus.OK);
 	}
 	@DeleteMapping("/admin/delete/customer/{customerId}")
