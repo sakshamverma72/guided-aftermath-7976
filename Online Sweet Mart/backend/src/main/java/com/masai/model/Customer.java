@@ -34,7 +34,7 @@ public class Customer {
 	private String password;
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private boolean active=true;
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	private String role = "ROLE_CUSTOMER";
 	
 //	@JsonIgnore

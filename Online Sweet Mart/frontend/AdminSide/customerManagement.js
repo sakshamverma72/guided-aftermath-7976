@@ -118,12 +118,12 @@ form.addEventListener('submit', (event) => {
   const customerId = document.querySelector('#customerId').value;
   console.log(customerId)
   const newRole = document.querySelector('#role').value;
-  let updateRoleApi=customerApi+'/updaterole/customer';
+  let updateRoleApi='http://localhost:8080/admin/updaterole/customer';
   const url = `${updateRoleApi}/${customerId}`;
   
   console.log(url)
   const data = {
-    role: newRole
+    role: "ROLE_"+newRole
   };
 console.log(data);
   fetch(url, {

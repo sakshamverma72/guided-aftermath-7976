@@ -326,15 +326,23 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		return customer.get();
 	}
 	@Override
-	public Customer ChangeRoleCustomer(Integer customerId, Customer customer) throws ApplicationException {
+	public Customer ChangeRoleCustomer(Integer customerId, Customer cust) throws ApplicationException {
 		Optional<Customer> customerr = cuRepo.findById(customerId);
 		if(customerr.isEmpty() || !customerr.get().getActive()) {
 			throw new ApplicationException("No Customer Found");
 		}
-		if(!customer.getRole().toUpperCase().equals("ADMIN") && !customer.getRole().toUpperCase().equals("CUSTOMER")) {
-			throw new ApplicationException("Role isn't a Valid one");
-		}
-		customerr.get().setRole("ROLE_"+customer.getRole().toUpperCase());
+//		if(!customer.getRole().toUpperCase().equals("ADMIN") && !customer.getRole().toUpperCase().equals("CUSTOMER")) {
+//			System.out.println(customer.getRole().toUpperCase());
+//			throw new ApplicationException("Role isn't a Valid one");
+//		}
+		
+//		System.out.println(customerr.get().getRole());
+//		customerr.get().setRole(null);
+//		cuRepo.save(customerr.get());
+//		System.out.println(cust.getRole());
+//		
+		customerr.get().setRole(cust.getRole().toUpperCase());
+		System.out.println(customerr.get().getRole());
 		cuRepo.save(customerr.get());
 		return customerr.get();
 
