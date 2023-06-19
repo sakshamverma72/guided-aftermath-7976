@@ -249,47 +249,28 @@ public class AdminServicesInterfaceImplimentation implements AdminServicesInterf
 		return ans;
 	}
 	@Override
-	public List<Product> getAllOrders() throws ApplicationException{
+	public List<Orders> getAllOrders() throws ApplicationException{
 		
 		List<Orders>orders = oRepo.findAll();
 		if(orders.size()==0) {
 			throw new ApplicationException("No Order Found");
 		}
-		ArrayList<Product>ans = new ArrayList<>();
-		for(Orders ad:orders) {
-			for(Product pro: ad.getProducts()) {
-				ans.add(pro);
-			}
-		}
-		if(ans.size()==0) {
-			throw new ApplicationException("No ordered Product Found");
-		}
-		return ans;
+		return orders;
 	}
 	@Override
-	public List<Product> getAllOrdersOfCustomer(Integer customerId) throws ApplicationException{
-		// TODO Auto-generated method stub
+	public List<Orders> getAllOrdersOfCustomer(Integer customerId) throws ApplicationException{
 		Optional<Customer> opt = cuRepo.findById(customerId);
 		if(opt.isEmpty() || !opt.get().getActive()) {
 			throw new ApplicationException("No Customer Found with these Details...");
 		}
 		if(opt.get().getCart()==null) {
-			throw new ApplicationException("Cart of customer don't have any Order...");
+			throw new ApplicationException("Cart of customer doesn't have any Order...");
 		}
 		List<Orders>orders = opt.get().getCart().getOrders();
 		if(orders.size()==0) {
 			throw new ApplicationException("No Order Found");
 		}
-		ArrayList<Product>ans = new ArrayList<>();
-		for(Orders ad:orders) {
-			for(Product pro: ad.getProducts()) {
-				ans.add(pro);
-			}
-		}
-		if(ans.size()==0) {
-			throw new ApplicationException("No Product Found in customer's Orders");
-		}
-		return ans;
+		return orders;
 	}
 	@Override
 	public Orders deleteOrder(Integer orderId)throws ApplicationException{
