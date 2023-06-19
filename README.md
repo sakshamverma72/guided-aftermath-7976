@@ -27,7 +27,6 @@ This is an backend application in which me my team of 3 members have created res
 - Admin Module
 - Customer Module
 
-
 # ER Diagram
 The following Diagram depicts the flow of our Entity Relation Diagram to simplify the work flow.
 
